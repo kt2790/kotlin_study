@@ -1,6 +1,6 @@
 package com.example.hotel_rsvn
 
-const val YEAR_SIZE = 8
+const val DATE_SIZE = 8
 val reservationServiceImpl: ReservationServiceImpl = ReservationServiceImpl.getInstance()
 
 fun main() {
@@ -49,7 +49,7 @@ fun main() {
                         if (this.isNullOrEmpty()) "0" else this
                     })
 
-                    if (checkInDate.toString().length == YEAR_SIZE) {
+                    if (checkInDate.toString().length == DATE_SIZE) {
                         if (reservationServiceImpl.checkInRoomAvailable(roomNo!!, checkInDate)) {
                             break
                         }
@@ -65,7 +65,7 @@ fun main() {
                         if (this.isNullOrEmpty()) "0" else this
                     })
 
-                    if (checkOutDate.toString().length == YEAR_SIZE) {
+                    if (checkOutDate.toString().length == DATE_SIZE) {
                         if (checkInDate!! <= checkOutDate) {
                             if (reservationServiceImpl.checkRoomAvailable(
                                     roomNo!!,
@@ -169,7 +169,7 @@ fun main() {
                                         if (this.isNullOrEmpty()) "0" else this
                                     })
 
-                                    if (checkInDate.toString().length == YEAR_SIZE) {
+                                    if (checkInDate.toString().length == DATE_SIZE) {
                                         if (reservationServiceImpl.checkInRoomAvailable(roomNo!!, checkInDate!!)) {
                                             break
                                         }
@@ -185,7 +185,7 @@ fun main() {
                                         if (this.isNullOrEmpty()) "0" else this
                                     })
 
-                                    if (checkOutDate.toString().length == YEAR_SIZE) {
+                                    if (checkOutDate.toString().length == DATE_SIZE) {
                                         if (checkInDate!! <= checkOutDate!!) {
                                             if (reservationServiceImpl.checkRoomAvailable(
                                                     roomNo!!,
