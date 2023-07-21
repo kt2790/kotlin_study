@@ -1,7 +1,7 @@
 package com.example.hotel_rsvn
 
 const val DATE_SIZE = 8
-val reservationServiceImpl: ReservationServiceImpl = ReservationServiceImpl.getInstance()
+val reservationServiceImpl: ReservationService = ReservationServiceImpl.getInstance()
 
 fun main() {
     var name: String?
