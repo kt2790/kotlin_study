@@ -1,7 +1,7 @@
 package com.example.hotel_rsvn
 
 const val DATE_SIZE = 8
-val reservationServiceImpl: ReservationService = ReservationServiceImpl.getInstance()
+val reservationService: ReservationService = ReservationServiceImpl.getInstance()
 
 fun main() {
     var name: String?
@@ -50,7 +50,7 @@ fun main() {
                     })
 
                     if (checkInDate.toString().length == DATE_SIZE) {
-                        if (reservationServiceImpl.checkInRoomAvailable(roomNo!!, checkInDate)) {
+                        if (reservationService.checkInRoomAvailable(roomNo!!, checkInDate)) {
                             break
                         }
                         println("해당 날짜에 이미 방을 사용중입니다. 다른날짜를 입력해주세요")
@@ -67,7 +67,7 @@ fun main() {
 
                     if (checkOutDate.toString().length == DATE_SIZE) {
                         if (checkInDate!! <= checkOutDate) {
-                            if (reservationServiceImpl.checkRoomAvailable(
+                            if (reservationService.checkRoomAvailable(
                                     roomNo!!,
                                     checkInDate,
                                     checkOutDate
@@ -84,7 +84,7 @@ fun main() {
                     println("올바르지 않은 날짜 형식입니다.")
                 }
 
-                reservationServiceImpl.addReservation(
+                reservationService.addReservation(
                     name!!,
                     roomNo!!,
                     checkInDate!!,
@@ -93,9 +93,9 @@ fun main() {
                 println("호텔 예약이 완료되었습니다.")
             }
 
-            2 -> reservationServiceImpl.showReservationList()
+            2 -> reservationService.showReservationList()
 
-            3 -> reservationServiceImpl.showSortedReservationList()
+            3 -> reservationService.showSortedReservationList()
 
             4 -> break
 
@@ -110,7 +110,7 @@ fun main() {
                     println("올바른 이름을 입력해주세요")
                 }
 
-                reservationServiceImpl.showUsedBalanceByName(name!!)
+                reservationService.showUsedBalanceByName(name!!)
             }
 
             6 -> {
@@ -124,7 +124,7 @@ fun main() {
                     println("올바른 이름을 입력해주세요")
                 }
 
-                reservationServiceImpl.findReservationByName(name!!)?.run {
+                reservationService.findReservationByName(name!!)?.run {
                     while (true) {
                         println("$name 님이 예약한 목록입니다. 변경하실 예약번호를 입력해주세요 (탈출은 exit입력)")
 
@@ -148,7 +148,7 @@ fun main() {
 
                         when(readLine().let {if (it.isNullOrEmpty()) 0 else Integer.parseInt(it)}) {
                             1 -> {
-                                reservationServiceImpl.dropReservationById(this[idx - 1].id)
+                                reservationService.dropReservationById(this[idx - 1].id)
 
                                 while (true) {
                                     println("예약할 방번호를 입력해주세요")
@@ -170,7 +170,7 @@ fun main() {
                                     })
 
                                     if (checkInDate.toString().length == DATE_SIZE) {
-                                        if (reservationServiceImpl.checkInRoomAvailable(roomNo!!, checkInDate!!)) {
+                                        if (reservationService.checkInRoomAvailable(roomNo!!, checkInDate!!)) {
                                             break
                                         }
                                         println("해당 날짜에 이미 방을 사용중입니다. 다른날짜를 입력해주세요")
@@ -187,7 +187,7 @@ fun main() {
 
                                     if (checkOutDate.toString().length == DATE_SIZE) {
                                         if (checkInDate!! <= checkOutDate!!) {
-                                            if (reservationServiceImpl.checkRoomAvailable(
+                                            if (reservationService.checkRoomAvailable(
                                                     roomNo!!,
                                                     checkInDate!!,
                                                     checkOutDate!!
@@ -204,7 +204,7 @@ fun main() {
                                     println("올바르지 않은 날짜 형식입니다.")
                                 }
 
-                                reservationServiceImpl.addReservation(
+                                reservationService.addReservation(
                                     name!!,
                                     roomNo!!,
                                     checkInDate!!,
@@ -215,7 +215,7 @@ fun main() {
 
                             }
                             2 -> {
-                                reservationServiceImpl.dropReservationById(this[idx - 1].id)
+                                reservationService.dropReservationById(this[idx - 1].id)
                                 println("취소가 완료되었습니다.")
                                 break
                             }
