@@ -15,14 +15,14 @@ class MemberRepositoryImpl private constructor() : MemberRepository {
     }
 
     override fun updateMember(name: String, balance: Int, usedBalance: Int): Boolean {
-        if (memberList.contains(name)) {
+        return if (memberList.contains(name)) {
             memberList[name] = Member(name, balance, usedBalance)
-            return true
-        } else return false
+            true
+        } else false
     }
 
     override fun getMemberUsedBalance(name: String): Int? {
-        return findMember(name)?.run {usedBalance}
+        return findMember(name)?.let {it.usedBalance}
     }
 
     companion object {

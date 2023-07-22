@@ -48,9 +48,9 @@ class ReservationServiceImpl private constructor (
     }
 
     override fun showUsedBalanceByName(name: String) {
-        memberRepository.findMember(name)?.let {
+        memberRepository.getMemberUsedBalance(name)?.let {
             println("1. 초기 금액으로 $INITIAL_MONEY 원 입급되었습니다.")
-            println("2. 예약금으로 ${it.usedBalance} 원 출금되었습니다.")
+            println("2. 예약금으로 $it 원 출금되었습니다.")
         } ?: println("예약된 사용자를 찾을 수 없습니다.")
     }
 
