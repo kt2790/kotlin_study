@@ -1,5 +1,8 @@
 package com.example.hotel_rsvn
 
+import com.example.hotel_rsvn.service.ReservationService
+import com.example.hotel_rsvn.service.ReservationServiceImpl
+
 const val DATE_SIZE = 8
 val reservationService: ReservationService = ReservationServiceImpl.getInstance()
 
