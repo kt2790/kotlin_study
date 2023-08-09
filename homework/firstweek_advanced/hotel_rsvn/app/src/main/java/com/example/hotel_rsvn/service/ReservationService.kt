@@ -5,9 +5,6 @@ import com.example.hotel_rsvn.repository.Reservation
 import com.example.hotel_rsvn.repository.ReservationRepository
 
 interface ReservationService {
-    val memberRepository: MemberRepository
-    val reservationRepository: ReservationRepository
-
     fun addReservation(name: String, roomNo: Int, checkInDate: Int, checkOutDate: Int)
     fun dropReservationById(id: Int): Boolean
 

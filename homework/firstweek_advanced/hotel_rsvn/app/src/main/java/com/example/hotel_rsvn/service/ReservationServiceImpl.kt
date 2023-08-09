@@ -8,23 +8,27 @@ import com.example.hotel_rsvn.repository.Reservation
 import com.example.hotel_rsvn.repository.ReservationRepository
 import com.example.hotel_rsvn.repository.ReservationRepositoryImpl
 
+
 class ReservationServiceImpl private constructor (
-    override val memberRepository: MemberRepository,
-    override val reservationRepository: ReservationRepository
+    private val memberRepository: MemberRepository,
+    private val reservationRepository: ReservationRepository
 ) : ReservationService {
 
-    override fun addReservation(name: String, roomNo: Int, checkInDate: Int, checkOutDate: Int) {
+    override fun addReservation(name: String, roomNo: Int, checkInDate: Int, checkOutDate: Int): Boolean {
         val member = memberRepository.findMember(name) ?: memberRepository.addMember(name)
         val balance = member!!.balance
         val usedBalance = member.usedBalance
 
         if (balance < COST) {
-            println("돈이 부족합니다.")
-            return
+            //println("돈이 부족합니다.")
+            return false
         }
 
-        memberRepository.updateMember(name, balance - COST, usedBalance + COST)
-        reservationRepository.addReservation(name, roomNo, checkInDate, checkOutDate)
+        return memberRepository.updateMember(name, balance - COST, usedBalance + COST)?.let {
+            reservationRepository.addReservation(it.name, roomNo, checkInDate, checkOutDate)
+            true
+        } ?: false
+
     }
 
     override fun dropReservationById(id: Int): Boolean {
@@ -47,11 +51,16 @@ class ReservationServiceImpl private constructor (
         reservationRepository.showSortedReservationList()
     }
 
-    override fun showUsedBalanceByName(name: String) {
-        memberRepository.getMemberUsedBalance(name)?.let {
-            println("1. 초기 금액으로 $INITIAL_MONEY 원 입급되었습니다.")
-            println("2. 예약금으로 $it 원 출금되었습니다.")
-        } ?: println("예약된 사용자를 찾을 수 없습니다.")
+    override fun showUsedBalanceByName(name: String) : Pair<Int, String> {
+        return memberRepository.getMemberUsedBalance(name)?.let {
+            Pair<Int, String>(0, buildString {
+                append("1. 초기 금액으로 $INITIAL_MONEY 원 입급되었습니다.\n")
+                append("2. 예약금으로 $it 원 출금되었습니다.")
+            })
+
+        } ?: Pair<Int, String>(1, "존재하지 않는 사용자 입니다")
+
+
     }
 
     override fun checkInRoomAvailable(roomNo: Int, checkInDate: Int): Boolean {
